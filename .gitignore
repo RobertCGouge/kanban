@@ -23,9 +23,6 @@ override.tf.json
 *_override.tf
 *_override.tf.json
 
-# Ignore transient lock info files created by terraform apply
-.terraform.tfstate.lock.info
-
 # Include override files you do wish to add to version control using negated pattern
 # !example_override.tf
 
@@ -36,6 +33,7 @@ override.tf.json
 .terraformrc
 terraform.rc
 
+# Typical Elixir ignore files
 /_build
 /cover
 /deps
@@ -46,5 +44,6 @@ erl_crash.dump
 *.beam
 /config/*.secret.exs
 .elixir_ls/
-modules/integrations/github/project_management/terraform.tfstate
-modules/integrations/github/project_management/terraform.tfstate.backup
+
+/priv/plts/*.plt
+/priv/plts/*.plt.hash
