@@ -2,7 +2,7 @@ ARG EX_VSN=1.16.3
 ARG OTP_VSN=26.1.2
 ARG ALPN_VSN=3.18.9
 
-ARG BUILDER_IMAGE=artifactory.shr.dev.mipc.css.cgipdc.cginet/dockerhub/hexpm/elixir:${EX_VSN}-erlang-${OTP_VSN}-alpine-${ALPN_VSN}
+ARG BUILDER_IMAGE=hexpm/elixir:${EX_VSN}-erlang-${OTP_VSN}-alpine-${ALPN_VSN}
 ARG RUNNER_IMG=alpine:${ALPN_VSN}
 
 FROM ${BUILDER_IMAGE} AS builder
