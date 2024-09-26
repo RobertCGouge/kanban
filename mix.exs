@@ -66,6 +66,13 @@ defmodule Kanban.MixProject do
   defp aliases do
     [
       setup: ["deps.get", "assets.setup", "assets.build"],
+      ci: [
+        "compile --warnings-as-errors",
+        "test --max-failures 1 --trace --warnings-as-errors",
+        "format --check-formatted",
+        "dialyzer --format github",
+        "deps.unlock --check-unused"
+      ],
       "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
       "assets.build": ["tailwind default", "esbuild default"],
       "assets.deploy": ["tailwind default --minify", "esbuild default --minify", "phx.digest"]
