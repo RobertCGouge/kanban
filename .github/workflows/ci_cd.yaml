@@ -12,8 +12,8 @@ on:
   workflow_dispatch:
 
 env:
-  OTP_VRSN: 26.2.1
-  ELIXIR_VRSN: 1.16.0
+  OTP_VERSION: 26.2.1
+  ELIXIR_VERSION: 1.16.0
   MIX_ENV: test
 
 jobs:
@@ -127,4 +127,4 @@ jobs:
           push: true
           build-args: |
             ELIXIR_VERSION=${{ env.ELIXIR_VERSION }}
-            OTP_VERSION=${{ env.ERLANG_VERSION }}
+            OTP_VERSION=${{ env.OTP_VERSION }}
