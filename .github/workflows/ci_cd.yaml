@@ -37,11 +37,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Setup Elixir v${{ env.ELIXIR_VRSN }}-otp-${{ env.OTP_VRSN }}
+      - name: Setup Elixir v${{ env.ELIXIR_VERSION }}-otp-${{ env.OTP_VERSION }}
         uses: erlef/setup-beam@v1
         with:
-          otp-version: ${{ env.OTP_VRSN }}
-          elixir-version: ${{ env.ELIXIR_VRSN }}
+          otp-version: ${{ env.OTP_VERSION }}
+          elixir-version: ${{ env.ELIXIR_VERSION }}
 
       - name: Cache deps directory
         uses: actions/cache@v4
