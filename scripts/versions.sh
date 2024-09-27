@@ -17,11 +17,11 @@ elixir_version=$(echo "${version_output}" | grep 'elixir')
 elixir_version=$(echo "${elixir_version}" | cut -d' ' -f2)
 elixir_version=$(echo "${elixir_version}" | cut -d' ' -f1)
 # Extract Erlang version
-erlang_version=$(echo "${version_output}" | grep 'erlang' )
-erlang_version=$(echo "${erlang_version}"  | cut -d' ' -f2)
+erlang_version=$(echo "${version_output}" | grep 'erlang')
+erlang_version=$(echo "${erlang_version}" | cut -d' ' -f2)
 # Extract os version
 os_version=$(echo "${version_output}" | grep '#base-os')
-os_version=$(echo "${version_output}"  | cut -d' ' -f2)
+os_version=$(echo "${version_output}" | cut -d' ' -f2)
 {
 	echo "elixir_version=${elixir_version}"
 	echo "erlang_version=${erlang_version}"
