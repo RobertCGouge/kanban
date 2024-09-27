@@ -17,6 +17,24 @@ services:
       PGDATA: /var/lib/postgresql/data
     volumes:
       - db_data:/var/lib/postgresql/data
+  
+  web:
+    depends_on:
+      - db
+    command: bash -c "bin/migrate && bin/server"
+    build: .
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    environment:
+      DATABASE_URL: ecto://postgres:postgres@db/postgres
+      SECRET_KEY_BASE: EZBBzA6t4VDID+qTO39K9WAqFS7oO9uyrV3d1dunhX0wy5N1l/44Nr8GtyjcsnzS
+      PHX_HOST: "localhost"
+    ports:
+      - 4000:4000
 
 volumes:
   db_data:
