@@ -9,12 +9,7 @@ defmodule Kanban.MixProject do
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps(),
-      dialyzer: [
-        plt_core_path: "priv/plts/core.plt",
-        plt_file: {:no_warn, "priv/plts/project.plt"},
-        plt_add_apps: [:ex_unit]
-      ]
+      deps: deps()
     ]
   end
 
@@ -38,6 +33,9 @@ defmodule Kanban.MixProject do
   defp deps do
     [
       {:phoenix, "~> 1.7.0"},
+      {:phoenix_ecto, "~> 4.4"},
+      {:ecto_sql, "~> 3.6"},
+      {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 3.3"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:phoenix_live_view, "~> 0.18.16"},
@@ -52,8 +50,7 @@ defmodule Kanban.MixProject do
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
-      {:plug_cowboy, "~> 2.5"},
-      {:dialyxir, "1.4.3", only: [:dev, :test], runtime: false}
+      {:plug_cowboy, "~> 2.5"}
     ]
   end
 
@@ -65,7 +62,10 @@ defmodule Kanban.MixProject do
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
-      setup: ["deps.get", "assets.setup", "assets.build"],
+      setup: ["deps.get", "ecto.setup", "assets.setup", "assets.build"],
+      "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
+      "ecto.reset": ["ecto.drop", "ecto.setup"],
+      test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
       ci: [
         "compile --warnings-as-errors",
         "test --max-failures 1 --trace --warnings-as-errors",

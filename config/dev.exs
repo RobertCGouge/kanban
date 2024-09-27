@@ -1,5 +1,15 @@
 import Config
 
+# Configure your database
+config :kanban, Kanban.Repo,
+  username: "postgres",
+  password: "postgres",
+  hostname: "localhost",
+  database: "kanban_dev",
+  stacktrace: true,
+  show_sensitive_data_on_connection_error: true,
+  pool_size: 10
+
 # For development, we disable any cache and enable
 # debugging and code reloading.
 #
@@ -13,7 +23,7 @@ config :kanban, KanbanWeb.Endpoint,
   check_origin: false,
   code_reloader: true,
   debug_errors: true,
-  secret_key_base: "4u8pYMCehk5CVZEMRAp2FbcY6u6KpZ/hnPMj+E+OWqV+4pluVvVXF6UgrarWbFu2",
+  secret_key_base: "czCbwNCqcpx6oF0+7v9nOS4g2gJ30hMzKPSpCgnRpztlRmb5bgl5bCWeGyXU29Pr",
   watchers: [
     esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]},
     tailwind: {Tailwind, :install_and_run, [:default, ~w(--watch)]}
