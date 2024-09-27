@@ -22,7 +22,7 @@ services:
     depends_on:
       - db
     command: bash -c "bin/migrate && bin/server"
-    build: .
+    image: ${WEB_IMAGE:-ghcr.io/robertcgouge/kanban:latest}
     deploy:
       restart_policy:
         condition: on-failure
