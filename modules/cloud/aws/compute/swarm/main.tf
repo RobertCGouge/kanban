@@ -29,8 +29,17 @@ data "aws_subnets" "main_subnets" {
   }
 }
 
+data "aws_ami" "swarm_image" {
+  most_recent = true
+  filter {
+    name = "name"
+    values = [ "amazon-linux-docker*" ]
+  }
+  owners = [ "872515294075" ]
+}
+
 resource "aws_instance" "my_swarm" {
-  ami                                  = "ami-0ebfd941bbafe70c6"
+  ami                                  = data.aws_ami.swarm_image.id
   associate_public_ip_address          = true
   availability_zone                    = "us-east-1c"
   instance_initiated_shutdown_behavior = "stop"
@@ -40,12 +49,7 @@ resource "aws_instance" "my_swarm" {
   user_data                            = <<-EOF
  	            #!/usr/bin/env bash
  	
- 	            sudo dnf update -y && \
- 	            sudo dnf install -y docker && \
- 	            sudo systemctl start docker && \
- 	            sudo systemctl enable docker && \
- 	            sudo usermod -a -G docker ec2-user && \
- 	            newgrp docker
+ 	            docker swarm init
  	            EOF
   placement_partition_number           = 0
   secondary_private_ips                = []
