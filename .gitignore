@@ -65,3 +65,5 @@ crash.log
 # For built boxes
 *.box
 *.pem
+secrets/.*
+**/key.txt
