@@ -35,7 +35,7 @@
  	
  	# set default variables
  	IMAGE=${1:-"ghcr.io/beamops/kanban:latest"}
- 	AWS_REGION="eu-west-1"
+ 	AWS_REGION="us-east-1"
  	INSTANCE_TAG_NAME="docker-swarm-manager"
  	STACK_NAME="kanban"
  	
