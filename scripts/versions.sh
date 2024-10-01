@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env bash	
 #---
 # Excerpted from "Engineering Elixir Applications",
 # published by The Pragmatic Bookshelf.
@@ -8,22 +8,24 @@
 # Visit https://pragprog.com/titles/beamops for more book information.
 #---
 
-# set -x
+# in scripts/versions.sh	
 
-# Replace this with the command that outputs the version information
-version_output=$(cat ./.tool-versions)
-# Extract the Elixir version
-elixir_version=$(echo "${version_output}" | grep 'elixir')
-elixir_version=$(echo "${elixir_version}" | cut -d' ' -f2)
-elixir_version=$(echo "${elixir_version}" | cut -d' ' -f1)
-# Extract Erlang version
-erlang_version=$(echo "${version_output}" | grep 'erlang')
-erlang_version=$(echo "${erlang_version}" | cut -d' ' -f2)
-# Extract os version
-os_version=$(echo "${version_output}" | grep '#base-os')
-os_version=$(echo "${version_output}" | cut -d' ' -f2)
-{
-	echo "elixir_version=${elixir_version}"
-	echo "erlang_version=${erlang_version}"
-	echo "os_version=${os_version}"
-} >>"${GITHUB_OUTPUT}"
+set -x	
+
+# read the version information from the ./tool-versions file	
+version_output=$(cat ./.tool-versions)	
+
+# extract the Elixir version	
+ELIXIR_VERSION=$(echo "$version_output" \	
+                | grep 'elixir' \	
+                | cut -d' ' -f2 \	
+                | cut -d'-' -f1)	
+
+# extract Erlang version	
+ERLANG_VERSION=$(echo "$version_output" | grep 'erlang' | cut -d' ' -f2)	
+
+# add the variables to the `GITHUB_ENV` (env used by the action's runner)	
+{ 	
+  echo "ELIXIR_VERSION=${ELIXIR_VERSION}"; 	
+  echo "ERLANG_VERSION=${ERLANG_VERSION}"; 	
+} >> "$GITHUB_ENV"
