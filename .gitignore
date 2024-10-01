@@ -67,3 +67,5 @@ crash.log
 *.pem
 secrets/.*
 **/key.txt
+ami_list.txt
+clean_aws.sh
