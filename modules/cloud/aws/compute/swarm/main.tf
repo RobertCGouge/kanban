@@ -32,16 +32,17 @@ data "aws_subnets" "main_subnets" {
 data "aws_ami" "swarm_image" {
   most_recent = true
   filter {
-    name = "name"
-    values = [ "amazon-linux-docker*" ]
+    name   = "name"
+    values = ["amazon-linux-docker*"]
   }
-  owners = [ "872515294075" ]
+  owners = ["872515294075"]
 }
 
-resource "aws_instance" "my_swarm" {
+resource "aws_instance" "swarm_node" {
   ami                                  = data.aws_ami.swarm_image.id
+  count                                = var.number_of_nodes
+  iam_instance_profile = aws_iam_instance_profile.main_profile.name
   associate_public_ip_address          = true
-  availability_zone                    = "us-east-1c"
   instance_initiated_shutdown_behavior = "stop"
   instance_type                        = "t2.micro"
   key_name                             = aws_key_pair.deployer_key.key_name
@@ -54,7 +55,7 @@ resource "aws_instance" "my_swarm" {
   placement_partition_number           = 0
   secondary_private_ips                = []
   source_dest_check                    = true
-  subnet_id                            = data.aws_subnets.main_subnets.ids[4]
+  subnet_id                            = data.aws_subnets.main_subnets.ids[count.index % length(data.aws_subnets.main_subnets.ids)]
   tags = {
     "Name" = "docker-swarm-manager"
   }
