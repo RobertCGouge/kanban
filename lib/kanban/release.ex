@@ -7,11 +7,10 @@ defmodule Kanban.Release do
 
   def migrate do
     load_app()
+    Ecto.Adapters.Postgres.storage_down(Kanban.Repo.config)
+    Ecto.Adapters.Postgres.storage_up(Kanban.Repo.config)
 
     for repo <- repos() do
-      Ecto.Adapters.Postgres.execute_ddl(repo, "drop schema public cascade;", [])
-      Ecto.Adapters.Postgres.execute_ddl(repo, "create schema public;", [])
-
       {:ok, _, _} = Ecto.Migrator.with_repo(repo, &Ecto.Migrator.run(&1, :up, all: true))
     end
   end
@@ -28,4 +27,6 @@ defmodule Kanban.Release do
   defp load_app do
     Application.load(@app)
   end
+
+
 end
