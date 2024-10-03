@@ -37,6 +37,10 @@ services:
       - databaseurl
       - secretkeybase
     deploy:
+      replicas: ${WEB_REPLICAS:-1}
+      placement:
+        preferences:
+          - spread: node.hostname
       restart_policy:
         condition: on-failure
         delay: 5s
