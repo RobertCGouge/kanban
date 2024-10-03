@@ -24,6 +24,7 @@ defmodule Kanban.Release do
   end
 
   def initialize() do
+    load_app()
     case Kanban.Repo.config() |> Ecto.Adapters.Postgres.storage_up() do
       :ok ->
         for repo <- repos() do
