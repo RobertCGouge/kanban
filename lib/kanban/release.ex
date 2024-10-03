@@ -7,12 +7,7 @@ defmodule Kanban.Release do
 
   def migrate do
     load_app()
-    Ecto.Adapters.Postgres.storage_down(Kanban.Repo.config)
-    Ecto.Adapters.Postgres.storage_up(Kanban.Repo.config)
-
-    for repo <- repos() do
-      {:ok, _, _} = Ecto.Migrator.with_repo(repo, &Ecto.Migrator.run(&1, :up, all: true))
-    end
+    initialize()
   end
 
   def rollback(repo, version) do
@@ -28,5 +23,16 @@ defmodule Kanban.Release do
     Application.load(@app)
   end
 
+  def initialize() do
+    case Kanban.Repo.config() |> Ecto.Adapters.Postgres.storage_up() do
+      :ok ->
+        for repo <- repos() do
+          {:ok, _, _} = Ecto.Migrator.with_repo(repo, &Ecto.Migrator.run(&1, :up, all: true))
+        end
 
+      _ ->
+        Process.sleep(1000)
+        initialize()
+    end
+  end
 end
