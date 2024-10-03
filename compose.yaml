@@ -43,9 +43,9 @@ services:
           - spread: node.hostname
       restart_policy:
         condition: on-failure
-        delay: 5s
+        delay: 20s
         max_attempts: 3
-        window: 120s
+        window: 500s
     environment:
       DATABASE_URL_FILE: /run/secrets/databaseurl
       SECRET_KEY_BASE_FILE: /run/secrets/secretkeybase
