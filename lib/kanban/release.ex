@@ -7,7 +7,12 @@ defmodule Kanban.Release do
 
   def migrate do
     load_app()
-    Kanban.Repo.__adapter__().storage_up(username: "postgres", database: "postgres", hostname: "db")
+
+    Kanban.Repo.__adapter__().storage_up(
+      username: "postgres",
+      database: "postgres",
+      hostname: "db"
+    )
 
     for repo <- repos() do
       {:ok, _, _} = Ecto.Migrator.with_repo(repo, &Ecto.Migrator.run(&1, :up, all: true))
